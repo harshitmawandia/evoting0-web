@@ -148,6 +148,22 @@ span.psw {
   transform: translate(-50%, -50%);
 }
 
+div.row{
+	display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: center;
+	gap: 24px;
+	border: 1px solid #ccc;
+	width: 500px;
+	margin: 0 auto;
+	padding: 10px 20px;
+}
+
+.col-10{
+	text-align: left;
+}
+
 /* Change styles for span and cancel button on extra small screens */
 
 @media screen and (max-width: 300px) {

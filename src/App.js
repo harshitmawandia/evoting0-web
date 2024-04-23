@@ -12,6 +12,7 @@ import AdminLogin from './pages/admin_login';
 import ElectoralUpload from './pages/electoral_upload';
 import React from 'react';
 
+
 function App() {
 
   const exitFullScreen = () => {

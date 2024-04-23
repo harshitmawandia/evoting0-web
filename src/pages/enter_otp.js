@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useEffect } from 'react';
+
 
 const initialValues = {
     otp : '',
@@ -13,7 +15,7 @@ function EnterOTP() {
 	// clear the local storage
 	ReactSession.setStoreType('sessionStorage');
 
-	const navigate = useNavigate();
+	const navigate = useNavigate();		
 
 	const loginSchema = Yup.object().shape({
         otp: Yup.string().required('OTP is required').min(4, 'OTP must be 4 digits').max(4, 'OTP must be 4 digits'),
@@ -28,8 +30,14 @@ function EnterOTP() {
 		onSubmit: (values) => {
             const my_otp = values.otp;
             const token = ReactSession.get('access_token');
+			if (token === null || token === undefined) {
+				alert("Please login first");
+				navigate('/', { replace: true });
+				return;
+			}
+			console.log(token);
 			axios.get(
-                "http://10.17.6.59/api/admin/voter/otp",
+                "http://127.0.0.1:8000/api/admin/voter/otp",
                 {
                     params: {
                         "otp": my_otp,
@@ -64,7 +72,7 @@ function EnterOTP() {
 					<input type='text' placeholder='Enter OTP' name='otp' required onChange={handleChange} value={values.otp} onBlur={handleBlur} autoComplete='off' />
                     {errors.otp && touched.otp ? <div>{errors.otp}</div> : null}
 
-					<button type='submit'>
+					<button type='submit' style={{ margin: '30px', width: '200px' }}>
 						Login
 					</button>
 				</div>

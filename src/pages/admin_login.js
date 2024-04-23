@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+
 const initialValues = {
 	username: '',
 	password: '',
@@ -34,7 +35,7 @@ function AdminLogin() {
 			const my_username = values.username;
 			const my_password = values.password;
 			axios
-				.post('http://10.17.6.59/api/admin/login', { username: my_username, password: my_password })
+				.post(`http://${process.env.REACT_APP_DOMAIN}/api/admin/login`, { username: my_username, password: my_password })
 				.then((res) => {
 					const access_token = res.data.access;
 					console.log(access_token);

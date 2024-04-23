@@ -15,6 +15,8 @@ function GenerateToken() {
 	ReactSession.set('otp', null);
 	ReactSession.set('elections', null);
 
+	const [disabled, setDisabled] = React.useState(false);
+
 
 	const loginSchema = Yup.object().shape({
         entryNumber: Yup.string().required('Entry Number is required').min(11, 'Entry Number must be 11 digits').max(11, 'Entry Number must be 11 digits'),
@@ -27,11 +29,19 @@ function GenerateToken() {
 		validationSchema: loginSchema,
 
 		onSubmit: (values) => {
+			// disable the button
+			setDisabled(true);
+			
             const my_entryNumber = values.entryNumber;
             const token = ReactSession.get('access_token');
+			if (token === null || token === undefined) {
+				alert("Please login first");
+				navigate('/', { replace: true });
+				return;
+			}
             console.log(token);
 			axios.get(
-                "http://10.17.6.59/api/admin/voter/token",
+                "http://127.0.0.1:8000/api/admin/voter/token",
                 {
                     params: {
                         "entryNumber": my_entryNumber,
@@ -50,6 +60,8 @@ function GenerateToken() {
             }).catch((err) => {
                 console.log(err.response);
                 alert(err.response.data.error);
+				// enable the button
+				setDisabled(false);
             })
 		},
 	});
@@ -76,7 +88,7 @@ function GenerateToken() {
 					<input type='text' placeholder='Entery Number' name='entryNumber' value={values.entryNumber} onChange={handleChange} onBlur={handleBlur} autoComplete='off' />
                     {touched.entryNumber && errors.entryNumber ? <div>{errors.entryNumber}</div> : null}
 
-					<button type='submit'>
+					<button type='submit' disabled={disabled} style={{ margin: '30px', width: '200px' }}>
 						Generate
 					</button>
 				</div>

@@ -18,14 +18,17 @@ function EligibleElections() {
         const token = ReactSession.get('access_token');
         const otp = ReactSession.get('otp');
 
-        if(token == null){
+        if(token === null ||  token === undefined){
+            alert('Please login first');
             navigate('/booth_login', { replace: true });
+            return;
         }
         if(otp == null){
             navigate('/enter_otp', { replace: true });
+            return;
         }
 
-        axios.get('http://10.17.6.59/api/admin/voter/elections', {
+        axios.get('http://127.0.0.1:8000/api/admin/voter/elections', {
 			params: {
 				otp: otp
 			},

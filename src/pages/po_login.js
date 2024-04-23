@@ -34,7 +34,7 @@ function POLogin() {
 			const my_username = values.username;
 			const my_password = values.password;
 			axios
-				.post('http://10.17.6.59/api/admin/login', { username: my_username, password: my_password })
+				.post('http://127.0.0.1:8000/api/admin/login', { username: my_username, password: my_password })
 				.then((res) => {
 					const access_token = res.data.access;
 					console.log(access_token);

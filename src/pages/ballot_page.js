@@ -3,13 +3,22 @@ import { ReactSession } from 'react-client-session';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {useEffect} from 'react';
+import QRCode from "react-qr-code";
 
 
 function BallotPage() {
 	// clear the local storage
 	ReactSession.setStoreType('sessionStorage');
     const token = ReactSession.get('access_token');
+    if (token === null || token === undefined) {
+        alert('You are not logged in. Please log in first.');
+        window.location.replace('/booth_login');
+    }
     const otp = ReactSession.get('otp');
+    if (otp === null || otp === undefined) {
+        alert('You have not entered the OTP. Please enter the OTP first.');
+        window.location.replace('/enter_otp');
+    }
     const elections = ReactSession.get('elections');
 
 
@@ -28,30 +37,10 @@ function BallotPage() {
 
     // on page load, get the elections that the user is eligible for
     useEffect(() => {
-        console.log(elections);
-
-        // if(token == null){
-        //     alert('Please login first');
-        //     navigate('/booth_login', { replace: true });
-        // }
-        // if(otp == null){
-        //     alert('Please enter OTP first');
-        //     navigate('/enter_otp', { replace: true });
-        // }
-        // if(elections == null){
-        //     alert('No elections found');
-        //     navigate('/eligible_elections', { replace: true });
-        // }
-        // if(elections.length === 0){
-        //     alert('No elections found');
-        //     navigate('/enter_otp', { replace: true });
-        // }
-
-        // get the current election
         setCurrentElection(elections[0]);
         var current = elections[0];
 
-        axios.get('http://10.17.6.59/api/admin/voter/ballot',
+        axios.get('http://127.0.0.1:8000/api/admin/voter/ballot',
             {
                 params:{
                     otp: otp,
@@ -158,7 +147,7 @@ function BallotPage() {
                 "voter_id": currentElection.voterId,
                 "vote_list": intOfSelectedIds
             }
-            axios.post('http://10.17.6.59/api/admin/voter/vote',
+            axios.post('http://127.0.0.1:8000/api/admin/voter/vote',
                 data,
                 {
                     headers:{
@@ -166,18 +155,21 @@ function BallotPage() {
                     }
                 }
             ).then((res)=>{
-                console.log(res.data);
+                // console.log(res.data);
                 // delete current election from elections
+                console.log(elections);
+                console.log(currentElection);
                 var remainingElections = elections.slice(1);
+                console.log(remainingElections);
                 if (remainingElections.length === 0) {
-                    localStorage.removeItem('elections');
-                    localStorage.removeItem('otp');
+                    ReactSession.set('elections', null);
+                    ReactSession.set('otp', null);
                     alert('You have completed voting! Thank you for voting!');
                     window.location.replace('/enter_otp');
                 } else {
-                    localStorage.setItem('elections', remainingElections);
+                    ReactSession.set('elections', remainingElections);
                     alert('You have completed voting for ' + currentElection.election + ' elections! You will now be redirected to the next election.');
-                    window.location.reload();
+                    window.location.replace('/ballot_page');
                 }
             }).catch((err)=>{
                 console.log(err);
@@ -222,7 +214,14 @@ function BallotPage() {
             <div class="heard-div" style={{margin: '30px 10%', marginBottom: '0px', textAlign: 'center', width: '80%', display: 'flex', 'flexDirection': 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
                 <div class="qr-div" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <h3>Verification Data</h3>
-                    <img width="100px" height="100px" src={"https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=C_rid:" + C_rid + ",C_u:" + C_u + ",u:" + u + "'"} alt="qr code"/>
+                    <QRCode
+                        size={120}
+                        style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                        value={"C_rid:" + C_rid + ",C_u:" + C_u + ",u:" + u + "'"}
+                        viewBox={`0 0 120 120`}
+                    />
+
+                    {/* <img width="100px" height="100px" src={"https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=C_rid:" + C_rid + ",C_u:" + C_u + ",u:" + u + "'"} alt="qr code"/> */}
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <h3>Number Of Votes=<span id="numVotes">{numVotes}</span></h3>
