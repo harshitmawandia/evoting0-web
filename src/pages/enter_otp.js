@@ -37,7 +37,7 @@ function EnterOTP() {
 			}
 			console.log(token);
 			axios.get(
-                "http://127.0.0.1:8000/api/admin/voter/otp",
+                "http://10.17.5.54:8000/api/admin/voter/otp",
                 {
                     params: {
                         "otp": my_otp,

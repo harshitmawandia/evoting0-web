@@ -111,11 +111,11 @@ function ElectoralUpload() {
       };
 
       axios
-        .post("http://127.0.0.1:8000/api/admin/createElection", data, {
+        .post("http://10.17.5.54:8000/api/admin/createElection", data, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
-          fetch("http://127.0.0.1:8000/api/admin/addCandidates", {
+          fetch("http://10.17.5.54:8000/api/admin/addCandidates", {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -129,7 +129,7 @@ function ElectoralUpload() {
               console.log(err);
               alert("Incorrect file format for candidates");
             });
-          fetch("http://127.0.0.1:8000/api/admin/addElectorate", {
+          fetch("http://10.17.5.54:8000/api/admin/addElectorate", {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -172,7 +172,7 @@ function ElectoralUpload() {
     // get csv file of all the results
 
     axios
-      .get("http://127.0.0.1:8000/api/admin/results", {
+      .get("http://10.17.5.54:8000/api/admin/results", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

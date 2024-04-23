@@ -40,7 +40,7 @@ function BallotPage() {
         setCurrentElection(elections[0]);
         var current = elections[0];
 
-        axios.get('http://127.0.0.1:8000/api/admin/voter/ballot',
+        axios.get('http://10.17.5.54:8000/api/admin/voter/ballot',
             {
                 params:{
                     otp: otp,
@@ -147,7 +147,7 @@ function BallotPage() {
                 "voter_id": currentElection.voterId,
                 "vote_list": intOfSelectedIds
             }
-            axios.post('http://127.0.0.1:8000/api/admin/voter/vote',
+            axios.post('http://10.17.5.54:8000/api/admin/voter/vote',
                 data,
                 {
                     headers:{

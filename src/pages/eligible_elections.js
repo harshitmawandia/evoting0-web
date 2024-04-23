@@ -28,7 +28,7 @@ function EligibleElections() {
             return;
         }
 
-        axios.get('http://127.0.0.1:8000/api/admin/voter/elections', {
+        axios.get('http://10.17.5.54:8000/api/admin/voter/elections', {
 			params: {
 				otp: otp
 			},

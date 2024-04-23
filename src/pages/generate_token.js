@@ -41,7 +41,7 @@ function GenerateToken() {
 			}
             console.log(token);
 			axios.get(
-                "http://127.0.0.1:8000/api/admin/voter/token",
+                "http://10.17.5.54:8000/api/admin/voter/token",
                 {
                     params: {
                         "entryNumber": my_entryNumber,
