@@ -11,6 +11,7 @@ import BallotPage from './pages/ballot_page';
 import AdminLogin from './pages/admin_login';
 import ElectoralUpload from './pages/electoral_upload';
 import React from 'react';
+import EquivalanceCheck from './pages/equivalance_check';
 
 
 function App() {
@@ -24,47 +25,47 @@ function App() {
     }
   };
 
-  React.useEffect(() => {
-    const handleKeyDown = (event) => {
-      const allowedKeys = /^[0-9a-zA-Z]+$/;
-      // console.log(event)
-      if (event.type === 'keydown' && !allowedKeys.test(event.key)) {
-        alert('Only letters and numbers are allowed.');
-        exitFullScreen();
-      }
-    };
+  // React.useEffect(() => {
+  //   const handleKeyDown = (event) => {
+  //     const allowedKeys = /^[0-9a-zA-Z]+$/;
+  //     // console.log(event)
+  //     if (event.type === 'keydown' && !allowedKeys.test(event.key)) {
+  //       alert('Only letters and numbers are allowed.');
+  //       exitFullScreen();
+  //     }
+  //   };
 
-    const handleVisibilityChange = () => {
-      if (document.visibilityState !== 'visible') {
-        alert('Changing tabs or windows is not allowed.');
-        exitFullScreen();
-      }
-    };
+  //   const handleVisibilityChange = () => {
+  //     if (document.visibilityState !== 'visible') {
+  //       alert('Changing tabs or windows is not allowed.');
+  //       exitFullScreen();
+  //     }
+  //   };
 
-    // const handleBlur = () => {
-    //   alert('Changing tabs or windows is not allowed.');
-    //   exitFullScreen();
-    // };
+  //   // const handleBlur = () => {
+  //   //   alert('Changing tabs or windows is not allowed.');
+  //   //   exitFullScreen();
+  //   // };
 
-    const handleContextMenu = (event) => {
-      event.preventDefault();
-      // alert('Right-clicking is not allowed.');
-      // exitFullScreen();
-    };
+  //   const handleContextMenu = (event) => {
+  //     event.preventDefault();
+  //     // alert('Right-clicking is not allowed.');
+  //     // exitFullScreen();
+  //   };
 
-    // document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('fullscreenchange', exitFullScreen);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    // window.addEventListener('blur', handleBlur);
-    document.addEventListener('contextmenu', handleContextMenu);
+  //   // document.addEventListener('keydown', handleKeyDown);
+  //   document.addEventListener('fullscreenchange', exitFullScreen);
+  //   document.addEventListener('visibilitychange', handleVisibilityChange);
+  //   // window.addEventListener('blur', handleBlur);
+  //   document.addEventListener('contextmenu', handleContextMenu);
 
-    return () => {
-      // document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('fullscreenchange', exitFullScreen);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      document.removeEventListener('contextmenu', handleContextMenu);
-    };
-  }, []);
+  //   return () => {
+  //     // document.removeEventListener('keydown', handleKeyDown);
+  //     document.removeEventListener('fullscreenchange', exitFullScreen);
+  //     document.removeEventListener('visibilitychange', handleVisibilityChange);
+  //     document.removeEventListener('contextmenu', handleContextMenu);
+  //   };
+  // }, []);
   
 
 	return (
@@ -79,6 +80,7 @@ function App() {
         <Route path='/ballot_page' element={<BallotPage />} />
         <Route path='/admin_login' element={<AdminLogin />} />
         <Route path='/electoral_upload' element={<ElectoralUpload />} />
+        <Route path='/equivalance_check' element={<EquivalanceCheck />} />
 			</Routes>
 		</div>
 	);

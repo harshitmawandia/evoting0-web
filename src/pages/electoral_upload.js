@@ -182,11 +182,12 @@ function ElectoralUpload() {
         link.href = window.URL.createObjectURL(blob);
         link.download = "results.csv";
         link.click();
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
         alert(err.response.data.error);
       });
-  }
+  };
 
   return (
     <div>
@@ -334,8 +335,15 @@ function ElectoralUpload() {
           <button type="submit">Create Election</button>
         </div>
 
-        <button style={{ margin: "30px", width: "200px" }} onClick={getAllElectionsResults}>
+        <button
+          style={{ margin: "30px", width: "200px" }}
+          onClick={getAllElectionsResults}
+        >
           Get Results
+        </button>
+
+        <button style={{ margin: "30px", width: "200px" }} onClick={() => {navigate('/equivalance_check', { replace: true })}}>
+          Equivalence check
         </button>
 
         <button style={{ margin: "30px", width: "200px" }} onClick={logout}>

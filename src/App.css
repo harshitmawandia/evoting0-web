@@ -164,6 +164,13 @@ div.row{
 	text-align: left;
 }
 
+.equivalance-check-container{
+	display: flex;
+	flex-direction: column;
+	justify-content:flex-start;
+	align-items: center;
+}
+
 /* Change styles for span and cancel button on extra small screens */
 
 @media screen and (max-width: 300px) {
